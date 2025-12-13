@@ -141,3 +141,5 @@ deploy-commands_dev.js
 index_dev.js
 *.tmp
 ~$torial.docx
+mittenedusers.txt
+chastityusers.txt
