@@ -5,7 +5,7 @@ const { calculateTimeout } = require("./../functions/timefunctions.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('mitten')
-		.setDescription('Put mittens on yourself, preventing the use of gag and ungag')
+		.setDescription('Put mittens on yourself, preventing /ungag on yourself and /gag on others')
 		/*.addStringOption(opt =>
 			opt.setName('timelength')
 			.setDescription('Human Readable Text (_days _ hours _ mins)')
