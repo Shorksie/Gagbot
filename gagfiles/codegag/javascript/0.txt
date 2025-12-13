@@ -5,5 +5,5 @@ import { w3 } from w4;
 let w5 = w6
 
 if (w7 == w8) {
-    console.log(wrest)
+    console.log("wrest")
 }

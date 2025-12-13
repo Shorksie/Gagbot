@@ -13,6 +13,18 @@ try {
 catch (err) { 
     console.log(err);
 }
+try {
+    process.mitten = JSON.parse(fs.readFileSync(`./mittenedusers.txt`))
+}
+catch (err) { 
+    console.log(err);
+}
+try {
+    process.chastity = JSON.parse(fs.readFileSync(`./chastityusers.txt`))
+}
+catch (err) { 
+    console.log(err);
+}
 
 // Grab all the command files from the commands directory
 const commands = [];

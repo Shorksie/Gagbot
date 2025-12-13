@@ -1,0 +1,12 @@
+// w0.js 
+while(w0) {
+    w1 += w2
+    for (let i = 0; i < w3; i++) {
+        w4.push(w5)
+        delete w6
+        delete w7
+    }
+    if (w8) { w9 = true }
+}
+
+console.log("wrest")

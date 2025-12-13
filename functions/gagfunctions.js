@@ -20,6 +20,7 @@ const getGag = (userID) => {
 const deleteGag = (userID) => {
     if (process.gags == undefined) { process.gags = {} }
     delete process.gags[userID]
+    fs.writeFileSync(`./gaggedusers.txt`, JSON.stringify(process.gags));
 }
 
 const assignMitten = (userID) => {
@@ -36,6 +37,7 @@ const getMitten = (userID) => {
 const deleteMitten = (userID) => {
     if (process.mitten == undefined) { process.mitten = {} }
     delete process.mitten[userID]
+    fs.writeFileSync(`./mittenedusers.txt`, JSON.stringify(process.mitten));
 }
 
 const splitMessage = (text) => {

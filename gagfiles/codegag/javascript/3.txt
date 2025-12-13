@@ -1,0 +1,12 @@
+// w0.js 
+w1.forEach((w2) => {
+    w2[w3] = w4
+    console.alert(w5)
+
+    w6++
+
+    w7 = w8.pop()
+    w9 = Array.from(w2)
+})
+
+console.log("wrest")
