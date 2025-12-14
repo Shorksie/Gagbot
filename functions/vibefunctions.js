@@ -54,15 +54,15 @@ const arousedtextshigh = [
 // Given a string, randomly provides a stutter and rarely provides an arousal text per word.
 const stutterText = (text, userid) => {
     let outtext = `${text}`;
-    if (Math.random() > (1.0 - (0.3 * getVibe(userid).intensity))) { // 3-30% to cause a stutter
-        let stuttertimes = Math.min(Math.floor(Math.random() * (0.3 * getVibe(userid).intensity)), 1) // Stutter between 1, 1-2 and 1-3 times, depending on intensity
+    if (Math.random() > (1.0 - (0.2 * getVibe(userid).intensity))) { // 2-20% to cause a stutter
+        let stuttertimes = Math.max(Math.floor(Math.random() * (0.3 * getVibe(userid).intensity)), 1) // Stutter between 1, 1-2 and 1-3 times, depending on intensity
         outtext = '';
         for (let i = 0; i < stuttertimes; i++) {
             outtext = `${outtext}${text.charAt(0)}-`
         }
         outtext = `${outtext}${text}`
     }
-    if (Math.random() > (1.0 - (0.1 * getVibe(userid).intensity))) { // 1-10% to insert an arousal text
+    if (Math.random() > (1.0 - (0.05 * getVibe(userid).intensity))) { // 0.5-5% to insert an arousal text
         let arousedlist = arousedtexts;
         if (getVibe(userid).intensity > 7) {
             for (let i = 0; i < arousedtextshigh; i++) { // Remove the first 5 elements to give the high arousal texts higher chance to show up
