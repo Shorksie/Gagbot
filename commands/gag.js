@@ -73,7 +73,7 @@ module.exports = {
 				interaction.reply(`${interaction.user} attempts to gag someone, but fumbles at holding the gag in ${getPronouns(interaction.user.id, "possessiveDeterminer")} mittens!`)
 			}
 			else {
-				interaction.reply(`${interaction.user} attempts to gag themselves, but can't get a good grip on the straps with ${getPronouns(interaction.user.id, "possessiveDeterminer")} mittens!`)
+				interaction.reply(`${interaction.user} attempts to gag ${getPronouns(interaction.user.id, "reflexive")}, but can't get a good grip on the straps with ${getPronouns(interaction.user.id, "possessiveDeterminer")} mittens!`)
 			}
 		}
 		else {

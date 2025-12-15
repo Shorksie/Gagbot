@@ -17,7 +17,7 @@ module.exports = {
         if (getHeavy(interaction.user.id)) {
             if (gaggeduser != interaction.user) {
                 if (getGag(gaggeduser)) {
-                    interaction.reply(`${interaction.user} bumps into ${gaggeduser}, trying to use ${getPronouns(interaction.user.id, "possessiveDeterminer")} useless arms to help them out of ${getPronouns(interaction.user.id, "possessiveDeterminer")} gag!`)
+                    interaction.reply(`${interaction.user} bumps into ${gaggeduser}, trying to use ${getPronouns(interaction.user.id, "possessiveDeterminer")} useless arms to help ${getPronouns(gaggeduser.id, "object")} out of ${getPronouns(gaggeduser.id, "possessiveDeterminer")} gag!`)
                 }
                 else {
                     interaction.reply({ content: `${gaggeduser} is not gagged!`, flags: MessageFlags.Ephemeral })
