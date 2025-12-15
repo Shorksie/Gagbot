@@ -55,6 +55,12 @@ try {
 catch (err) { 
     console.log(err);
 }
+try {
+    process.optins = JSON.parse(fs.readFileSync(`${process.GagbotSavedFileDirectory}/optinusers.txt`))
+}
+catch (err) { 
+    console.log(err);
+}
 
 // Grab all the command files from the commands directory
 const commands = new Map();
