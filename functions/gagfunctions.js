@@ -70,7 +70,16 @@ const deleteMitten = (userID) => {
 
 const splitMessage = (text) => {
 
-    const regex = /\*{1}(\*{2})?([^\*]|\*{2})+\*|[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)|https?\:\/\//g
+    /************************************
+     * Massive Regex, let's break it down:
+     * 
+     * 1.) Match Italicized Text, WITHOUT false-positives on bolded text.
+     * 2.) Match Website URLs - It's text copied from a random stack overflow post.
+     * 3.) Match HTTP(S) Headers - The URL matcher didn't catch these.
+     * 4.) Match Emoji - <:Emojiname:000000000000000000>
+    **************************/
+    //             |--------   Match italic text   -------| |----------------------  Match website URLs     -----------------------------------| |- HTTP(s) --| |--- Emojis ---|
+    const regex = /(((?<!\*)\*{1})(\*{2})?([^\*]|\*{2})+\*)|([-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*))|(https?\:\/\/)|(<:[^:]+:[^>]+>)/g
 
     let output = [];
     let deepCopy = text.split()[0]
