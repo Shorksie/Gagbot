@@ -85,6 +85,14 @@ try {
 catch (err) { 
     console.log(err);
 }
+try {
+    if (!fs.existsSync(`${process.GagbotSavedFileDirectory}/consentusers.txt`)) {
+        fs.writeFileSync(`${process.GagbotSavedFileDirectory}/consentusers.txt`, JSON.stringify({}))
+    }
+    process.consented = JSON.parse(fs.readFileSync(`${process.GagbotSavedFileDirectory}/consentusers.txt`))
+} catch (err) { 
+    console.log(err);
+}
 
 // Grab all the command files from the commands directory
 const commands = [];
@@ -128,6 +136,19 @@ client.on("messageCreate", async (msg) => {
 
 client.on('interactionCreate', async (interaction) => {
     try {
+        if (interaction.isModalSubmit()) {
+            // We can't pass custom data through the modal except via the ID, so separate out the first part
+            // as IDs will come in like collar_12451251253 - we want the collar part to query the command. 
+            let interactioncommand = interaction.customId.split("_")[0]
+            console.log(interactioncommand);
+            if (commandFiles.includes(`${interactioncommand}.js`)) {
+                const cmd = require(path.join(commandsPath, `${interactioncommand}.js`))
+                if (cmd.modalexecute) {
+                    cmd.modalexecute(interaction);
+                    return;
+                }
+            }
+        }
         if ((interaction.channel.id != process.env.CHANNELID) && (interaction.channel.id != process.env.CHANNELIDDEV)) { 
             interaction.reply({ content: `Please use these commands over in <#${process.env.CHANNELID}>.`, flags: discord.MessageFlags.Ephemeral })
             return;
