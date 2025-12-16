@@ -13,6 +13,7 @@ module.exports = {
 		),
     async execute(interaction) {
 		let mitteneduser = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user
+		// You can only ever have this affect you if you already consented. 
 		if (getHeavy(interaction.user.id)) {
 			if (interaction.options.getUser('user') == interaction.user) {
             	interaction.reply(`${interaction.user} wriggles ${getPronouns(mitteneduser.id, "possessiveDeterminer")} hands in their ${getHeavy(interaction.user.id).type}, but can't get good leverage to take ${getPronouns(mitteneduser.id, "possessiveDeterminer")} mittens off!`)

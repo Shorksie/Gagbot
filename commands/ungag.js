@@ -13,6 +13,7 @@ module.exports = {
         ),
     async execute(interaction) {
         let gaggeduser = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user;
+        // You can only ever have this affect you if you already consented. 
         if (getHeavy(interaction.user.id)) {
             if (gaggeduser != interaction.user) {
                 if (getGag(gaggeduser)) {

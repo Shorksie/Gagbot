@@ -2,6 +2,7 @@ const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { getChastity, getVibe, assignVibe } = require('./../functions/vibefunctions.js')
 const { getHeavy } = require('./../functions/heavyfunctions.js')
 const { getPronouns } = require('./../functions/pronounfunctions.js')
+const { getConsent, handleConsent } = require('./../functions/interactivefunctions.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,6 +20,11 @@ module.exports = {
         ),
     async execute(interaction) {
         let vibeuser = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user
+        // CHECK IF THEY CONSENTED! IF NOT, MAKE THEM CONSENT
+        if (!getConsent(vibeuser.id)) {
+            await handleConsent(interaction, vibeuser.id);
+            return;
+        }
 		let vibeintensity = interaction.options.getNumber('intensity') ? interaction.options.getNumber('intensity') : 5
         if (getHeavy(interaction.user.id)) {
             if (vibeuser == interaction.user) {

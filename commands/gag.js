@@ -4,6 +4,7 @@ const path = require('path');
 const { assignGag, getMitten } = require('./../functions/gagfunctions.js')
 const { getHeavy } = require('./../functions/heavyfunctions.js')
 const { getPronouns } = require('./../functions/pronounfunctions.js')
+const { getConsent, handleConsent } = require('./../functions/interactivefunctions.js')
 
 // Grab all the command files from the commands directory
 const gagtypes = [];
@@ -33,12 +34,17 @@ module.exports = {
 		)
 		.addNumberOption((opt) => 
 			opt.setName('intensity')
-			.setDescription("How intense to gag. Range 1-10")
+			.setDescription("How tightly to gag. Range 1-10")
 			.setMinValue(1)
 			.setMaxValue(10)
 		),
     async execute(interaction) {
 		let gaggeduser = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user
+		// CHECK IF THEY CONSENTED! IF NOT, MAKE THEM CONSENT
+        if (!getConsent(gaggeduser.id)) {
+            await handleConsent(interaction, gaggeduser.id);
+            return;
+        }
 		let gagtype = interaction.options.getString('gag') ? interaction.options.getString('gag') : 'ball'
 		let gagintensity = interaction.options.getNumber('intensity') ? interaction.options.getNumber('intensity') : 5
 		let gagname = gagtypes.find(g => g.value == gagtype).name;

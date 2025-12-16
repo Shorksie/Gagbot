@@ -3,6 +3,7 @@ const { getChastity, assignChastity } = require('./../functions/vibefunctions.js
 const { calculateTimeout } = require("./../functions/timefunctions.js")
 const { getHeavy } = require('./../functions/heavyfunctions.js')
 const { getPronouns } = require('./../functions/pronounfunctions.js')
+const { getConsent, handleConsent } = require('./../functions/interactivefunctions.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,6 +20,11 @@ module.exports = {
     async execute(interaction) {
         let chastityuser = interaction.user
 		let chastitykeyholder = interaction.options.getUser('keyholder')
+        // CHECK IF THEY CONSENTED! IF NOT, MAKE THEM CONSENT
+        if (!getConsent(interaction.user.id)) {
+            await handleConsent(interaction, interaction.user.id);
+            return;
+        }
         // Check if the wearer is in an armbinder - if they are, block them. 
         if (getHeavy(interaction.user.id)) {
             if (getChastity(interaction.user.id)) {

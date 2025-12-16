@@ -13,6 +13,7 @@ module.exports = {
 		),
     async execute(interaction) {
         let heavyuser = interaction.options.getUser('user') ? interaction.options.getUser('user') : interaction.user
+        // You can only ever have this affect you if you already consented. 
         if (getHeavy(interaction.user.id)) {
             if (interaction.user == heavyuser) {
                 interaction.reply(`${interaction.user} wiggles in ${getPronouns(interaction.user.id, "possessiveDeterminer")} ${getHeavy(interaction.user.id).type}, but obviously ${getPronouns(interaction.user.id, "subjectIs")} *very* helpless and can't get far with taking it off on ${getPronouns(interaction.user.id, "possessiveDeterminer")} own!`)

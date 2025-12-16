@@ -14,6 +14,7 @@ module.exports = {
 		),
     async execute(interaction) {
 		let chastitywearer = interaction.options.getUser('wearer') ? interaction.options.getUser('wearer') : interaction.user
+        // You can only ever have this affect you if you already consented. 
         if (getHeavy(interaction.user.id)) {
             if (getChastity(interaction.user.id)) {
                 interaction.reply(`${interaction.user} shifts in ${getPronouns(interaction.user.id, "possessiveDeterminer")} ${getHeavy(interaction.user.id).type}, trying to squirm out of ${getPronouns(interaction.user.id, "possessiveDeterminer")} chastity belt, but ${getPronouns(interaction.user.id, "possessiveDeterminer")} metal prison holds firmly to ${getPronouns(interaction.user.id, "possessiveDeterminer")} body!`)
