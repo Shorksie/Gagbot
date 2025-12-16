@@ -36,6 +36,13 @@ module.exports = {
         )
     ),
   async execute(interaction) {
+    // temporarily disabled since im not entirely sure what you want as checks to make a steal "valid", so currently it could be used to get around keyholders through an intermediary
+    interaction.reply({
+      content: "This command is disabled",
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+
     const keyType = interaction.options.getSubcommand();
 
     const lockedUser = interaction.options.getUser("user");
