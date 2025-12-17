@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { messageSend, messageSendImg, messageSendDev } = require(`./../functions/messagefunctions.js`)
-const { getVibe, vibeText } = require(`./../functions/vibefunctions.js`)
+const { getVibe, stutterText } = require(`./../functions/vibefunctions.js`)
 const { getCorset, corsetLimitWords } = require(`./../functions/corsetfunctions.js`)
 
 // Grab all the command files from the commands directory
@@ -122,6 +122,18 @@ const garbleMessage = async (msg) => {
         let outtext = '';
         let messageparts = splitMessage(msg.content);
         let modifiedmessage = false;
+
+        //Weird exception for links
+        for (let i = 0; i < messageparts.length - 1; i++) {
+            let current = messageparts[i];
+            let next = messageparts[i + 1];
+            if (current.text.startsWith("http://") || current.text.startsWith("https://")) {
+                messageparts[i].text += next.text;
+                messageparts.splice(i + 1, 1);
+                messageparts[i].garble = false
+            }
+        }
+
         let totalwords = 0;
         for (let i = 0; i < messageparts.length; i++) {
             if (messageparts[i].garble) {
@@ -129,20 +141,26 @@ const garbleMessage = async (msg) => {
             }
         }
         console.log(msg.content)
+        
         // Vibrators first
-        if (getVibe(msg.author.id)) {
+        if (process.vibe == undefined) { process.vibe = {} }
+        if (process.vibe[msg.author.id]) {
+
             modifiedmessage = true;
+
             totalwords = 0 // recalculate eligible word count because they're stimmed out of their mind. 
+            let vibeintensity = process.vibe[msg.author.id].reduce((a, b) => a + b.intensity, 0) || 5
             for (let i = 0; i < messageparts.length; i++) {
                 try {
                     if (messageparts[i].garble) {
-                        messageparts[i].text = vibeText(messageparts[i].text, msg.author.id)
+                        messageparts[i].text = stutterText(messageparts[i].text, vibeintensity)
                         totalwords = totalwords + messageparts[i].text.split(" ").length
                     }
                 }
                 catch (err) { console.log(err) }
             }
         }
+
         console.log(messageparts)
         console.log(totalwords)
         // Now corset any words, using an amount to start with.
@@ -204,7 +222,12 @@ const garbleMessage = async (msg) => {
             let messagetexts = messageparts.map(m => m.text);
             outtext = messagetexts.join(" ");
         }
-        if (modifiedmessage) {
+
+        if (modifiedmessage) { //Fake reply with a ping
+            if (msg.type == "19") {
+                const replied = await msg.fetchReference();
+                outtext = `${replied.author.toString()}\n${outtext}`
+            }
             if (outtext.length > 1999) {
                 outtext = outtext.slice(0, 1999); // Seriously, STOP POSTING LONG MESSAGES
             }
