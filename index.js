@@ -96,6 +96,14 @@ try {
 } catch (err) { 
     console.log(err);
 }
+try {
+    if (!fs.existsSync(`${process.GagbotSavedFileDirectory}/corsetusers.txt`)) {
+        fs.writeFileSync(`${process.GagbotSavedFileDirectory}/corsetusers.txt`, JSON.stringify({}))
+    }
+    process.corset = JSON.parse(fs.readFileSync(`${process.GagbotSavedFileDirectory}/corsetusers.txt`))
+} catch (err) { 
+    console.log(err);
+}
 
 // Grab all the command files from the commands directory
 const commands = [];
@@ -121,7 +129,6 @@ client.on("clientReady", async () => {
 client.on("messageCreate", async (msg) => {
     // This is called when a message is received.
     try {
-        console.log(msg)
         console.log(`${(msg.channel.id != process.env.CHANNELID)}`)
         console.log(`${msg.webhookId}`)
         console.log(`${msg.author.bot}`)
